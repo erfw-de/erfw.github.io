@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>个人开发者支持站</title>
+    <title>模组开发者 | 我的世界模组</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #00cec9;
+            --danger: #ff7675;
+            --warning: #fdcb6e;
+            --success: #00b894;
+            --dark: #2d3436;
+            --light: #dfe6e9;
         }
         
         body {
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: linear-gradient(135deg, #0c0e1d, #1a1c2e, #2a2d42);
             color: #f0f8ff;
             min-height: 100vh;
             overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
             position: relative;
         }
         
@@ -25,7 +37,15 @@
             position: fixed;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 0;
+        }
+        
+        .click-particle {
+            position: fixed;
+            pointer-events: none;
+            border-radius: 50%;
+            z-index: 1000;
+            transform: translate(-50%, -50%);
         }
         
         .container {
@@ -33,76 +53,233 @@
             margin: 0 auto;
             padding: 2rem;
             position: relative;
-            z-index: 1;
+            z-index: 10;
         }
         
+        /* 头部样式 */
         header {
             text-align: center;
-            padding: 2rem 0;
-            margin-bottom: 3rem;
+            padding: 3rem 0 2rem;
+            margin-bottom: 2rem;
         }
         
-        .avatar {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            border: 5px solid #4db8ff;
-            box-shadow: 0 0 25px rgba(77, 184, 255, 0.5);
-            margin: 0 auto 1.5rem;
-            background: linear-gradient(135deg, #1a3a4a, #2a5a6a);
+        .developer-title {
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 4rem;
-            color: #4db8ff;
-        }
-        
-        h1 {
-            font-size: 3.2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, #4db8ff, #8ae2ff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 2px 10px rgba(77, 184, 255, 0.3);
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            color: #a0d2ff;
+            gap: 1rem;
             margin-bottom: 1.5rem;
         }
         
-        .intro {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            padding: 1.5rem;
-            background: rgba(20, 40, 60, 0.5);
-            border-radius: 15px;
-            border-left: 4px solid #4db8ff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.4);
+            border: 3px solid rgba(255, 255, 255, 0.2);
         }
         
-        .intro i {
-            color: #4db8ff;
-            margin-right: 8px;
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            background: linear-gradient(to right, var(--primary), var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-shadow: 0 5px 15px rgba(108, 92, 231, 0.2);
         }
         
-        .links-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+        
+        /* 模组展示区域 */
+        .mods-section {
             margin-bottom: 4rem;
         }
         
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .mods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 768px) {
+            .mods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .mod-card {
+            background: rgba(30, 33, 57, 0.8);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .mod-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+        }
+        
+        .mod-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(108, 92, 231, 0.5);
+        }
+        
+        .mod-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .mod-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary), #8a7cff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 1.5rem;
+            color: white;
+            box-shadow: 0 8px 16px rgba(108, 92, 231, 0.3);
+        }
+        
+        .mod-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .mod-tag {
+            display: inline-block;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--secondary);
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .mod-desc {
+            color: #b8c1ec;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        
+        .mod-features {
+            margin-bottom: 2rem;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.8rem;
+        }
+        
+        .feature i {
+            color: var(--accent);
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #8a7cff);
+            color: white;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(108, 92, 231, 0.4);
+            background: linear-gradient(135deg, #7b6cf7, #9a8eff);
+        }
+        
+        .btn-download i {
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        
+        /* 其他链接区域 */
+        .links-section {
+            margin-bottom: 4rem;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
         .link-card {
-            background: rgba(25, 50, 70, 0.7);
+            background: rgba(30, 33, 57, 0.6);
             border-radius: 15px;
             padding: 2rem;
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(77, 184, 255, 0.2);
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -110,108 +287,122 @@
         }
         
         .link-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-            border-color: rgba(77, 184, 255, 0.5);
+            transform: translateY(-5px);
+            background: rgba(40, 43, 67, 0.8);
+            border-color: rgba(108, 92, 231, 0.3);
         }
         
         .link-icon {
-            font-size: 3.5rem;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
             margin-bottom: 1.5rem;
-            color: #4db8ff;
+            color: var(--primary);
         }
         
         .link-title {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: #8ae2ff;
+            color: white;
         }
         
         .link-desc {
-            font-size: 1rem;
-            color: #b8dfff;
-            line-height: 1.6;
+            color: #b8c1ec;
             margin-bottom: 1.5rem;
             flex-grow: 1;
         }
         
-        .btn {
-            display: inline-block;
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
             padding: 0.8rem 1.8rem;
-            background: linear-gradient(135deg, #4db8ff, #2a8fcc);
-            color: white;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--secondary);
             border-radius: 50px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 1.1rem;
+            font-weight: 500;
             transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(77, 184, 255, 0.3);
+            border: 1px solid rgba(108, 92, 231, 0.3);
         }
         
-        .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(77, 184, 255, 0.5);
-            background: linear-gradient(135deg, #5dc8ff, #3a9fdc);
+        .btn-link:hover {
+            background: rgba(108, 92, 231, 0.3);
+            transform: translateY(-2px);
+            color: white;
         }
         
-        .btn i {
-            margin-right: 8px;
-        }
-        
-        .dev-message {
-            text-align: center;
-            padding: 2.5rem;
-            background: rgba(20, 40, 60, 0.6);
-            border-radius: 15px;
+        /* 开发者故事 */
+        .dev-story {
+            background: rgba(30, 33, 57, 0.6);
+            border-radius: 20px;
+            padding: 3rem;
             margin-top: 2rem;
-            border-top: 3px solid #4db8ff;
+            border-left: 5px solid var(--primary);
+            backdrop-filter: blur(10px);
         }
         
-        .dev-message h2 {
+        .dev-story h2 {
+            font-family: 'Orbitron', sans-serif;
             font-size: 2.2rem;
             margin-bottom: 1.5rem;
-            color: #8ae2ff;
+            color: white;
         }
         
-        .dev-message p {
-            font-size: 1.2rem;
+        .dev-story p {
+            font-size: 1.1rem;
             line-height: 1.8;
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #b8c1ec;
         }
         
         .highlight {
-            color: #ffcc4d;
-            font-weight: bold;
+            color: var(--accent);
+            font-weight: 600;
         }
         
+        .coffee {
+            display: inline-flex;
+            align-items: center;
+            color: var(--warning);
+            margin: 0 5px;
+        }
+        
+        /* 页脚 */
         footer {
             text-align: center;
             padding: 2rem;
-            margin-top: 3rem;
-            color: #88bbdd;
-            border-top: 1px solid rgba(77, 184, 255, 0.2);
+            margin-top: 4rem;
+            color: #8a91b2;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
         
         .click-hint {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: rgba(77, 184, 255, 0.2);
+            background: rgba(108, 92, 231, 0.2);
             padding: 10px 15px;
             border-radius: 20px;
             font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            z-index: 100;
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0% { opacity: 0.7; }
-            50% { opacity: 1; }
-            100% { opacity: 0.7; }
+            0% { opacity: 0.7; box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.4); }
+            70% { opacity: 1; box-shadow: 0 0 0 10px rgba(108, 92, 231, 0); }
+            100% { opacity: 0.7; box-shadow: 0 0 0 0 rgba(108, 92, 231, 0); }
         }
         
+        /* 响应式调整 */
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -221,99 +412,249 @@
                 font-size: 2.5rem;
             }
             
-            .links-section {
+            .mods-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .mod-card {
+                padding: 2rem;
+            }
+            
+            .dev-story {
+                padding: 2rem;
             }
             
             .click-hint {
                 display: none;
             }
         }
+        
+        /* 粒子计数显示 */
+        .particle-count {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            z-index: 100;
+            backdrop-filter: blur(5px);
+            display: none;
+        }
+        
+        .show-count .particle-count {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div id="particles-js"></div>
+    <div class="particle-count">粒子数: <span id="count">0</span></div>
     
     <div class="container">
         <header>
-            <div class="avatar">
-                <i class="fas fa-code"></i>
+            <div class="developer-title">
+                <div class="avatar">
+                    <i class="fas fa-code"></i>
+                </div>
+                <div>
+                    <h1>模组开发者</h1>
+                    <div class="tagline">独立我的世界模组创作者 | 熬夜写代码的咖啡爱好者</div>
+                </div>
             </div>
-            <h1>个人开发者支持站</h1>
-            <div class="subtitle">独立游戏模组开发者 | 我的世界模组创作者</div>
         </header>
         
-        <div class="intro">
-            <p><i class="fas fa-moon"></i> 作为一名独立开发者，我每天熬夜编写代码、调试功能、创作内容，只为带来更好的游戏体验。</p>
-            <p><i class="fas fa-heart"></i> 如果您喜欢我的作品，希望您能支持我，关注我的频道和网站，这将是我持续创作的最大动力！</p>
-        </div>
-        
-        <div class="links-section">
-            <div class="link-card">
-                <div class="link-icon">
-                    <i class="fas fa-hand-holding-heart"></i>
-                </div>
-                <h3 class="link-title">爱发电支持</h3>
-                <p class="link-desc">在这里您可以对我进行赞助，支持我继续开发更多有趣的模组。每一份支持都是我深夜编码的动力！</p>
-                <a href="https://afdian.com/a/bukkit_plugin" target="_blank" class="btn">
-                    <i class="fas fa-heart"></i> 支持我
-                </a>
-            </div>
+        <!-- 模组下载区域 -->
+        <section class="mods-section">
+            <h2 class="section-title">我的模组作品</h2>
             
-            <div class="link-card">
-                <div class="link-icon">
-                    <i class="fab fa-bilibili"></i>
+            <div class="mods-grid">
+                <div class="mod-card">
+                    <div class="mod-header">
+                        <div class="mod-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <div class="mod-name">增强仿生</div>
+                            <div class="mod-tag">技能系统 | 新怪物 | 新材料</div>
+                        </div>
+                    </div>
+                    
+                    <p class="mod-desc">
+                        一个专注于拓展原版体验的综合性模组，引入6种独特技能、新怪物、新材料以及深度联动机制，为冒险家们带来更丰富的战斗与探索维度。
+                    </p>
+                    
+                    <div class="mod-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>6种独特技能：冰冻、火焰、传送、声波、治疗、风弹</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>与机械动力模组深度联动</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>新增雪怪、雪怪王等强大怪物</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>新增幽匿合金，可在深黯之域获取</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/enhance-bionics" target="_blank" class="btn-download">
+                        <i class="fas fa-download"></i> 下载增强仿生模组
+                    </a>
                 </div>
-                <h3 class="link-title">B站频道</h3>
-                <p class="link-desc">在这里我会发布模组演示视频、开发日志和教程。关注我，第一时间获取更新和开发动态！</p>
-                <a href="https://space.bilibili.com/3546861273090398?spm_id_from=333.33.0.0" target="_blank" class="btn">
-                    <i class="fas fa-play-circle"></i> 观看视频
-                </a>
-            </div>
-            
-            <div class="link-card">
-                <div class="link-icon">
-                    <i class="fas fa-graduation-cap"></i>
+                
+                <div class="mod-card">
+                    <div class="mod-header">
+                        <div class="mod-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div>
+                            <div class="mod-name">化学工业</div>
+                            <div class="mod-tag">科技 | 自动化 | 化学反应</div>
+                        </div>
+                    </div>
+                    
+                    <p class="mod-desc">
+                        一个专注于化学与工业的科技模组，添加了复杂的化学合成系统、自动化生产线和新的能源系统，让你的 Minecraft 世界进入工业革命时代。
+                    </p>
+                    
+                    <div class="mod-features">
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>完整的化学元素与化合物系统</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>自动化化工生产线与反应釜</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>新增电力系统与发电机</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>环保与污染机制，影响游戏生态</span>
+                        </div>
+                    </div>
+                    
+                    <a href="https://www.curseforge.com/minecraft/mc-mods/chemicalindustry" target="_blank" class="btn-download">
+                        <i class="fas fa-download"></i> 下载化学工业模组
+                    </a>
                 </div>
-                <h3 class="link-title">模组开发教程</h3>
-                <p class="link-desc">想学习模组开发吗？这里提供了完整的教程，从入门到进阶，帮助您踏上模组开发之路。</p>
-                <a href="https://blog.csdn.net/qq_24992377/category_12929001.html" target="_blank" class="btn">
-                    <i class="fas fa-book-open"></i> 学习教程
-                </a>
             </div>
-        </div>
+        </section>
         
-        <div class="dev-message">
-            <h2>我的创作故事</h2>
-            <p>作为一名独立开发者，我热爱通过代码创造新的游戏体验。<span class="highlight">《增强仿生》</span>模组是我花费数百小时的心血之作，从构思技能系统到设计新怪物，每个细节都经过反复测试和优化。</p>
-            <p>深夜的咖啡、调试的煎熬、解决问题的喜悦...这一切都是为了带给玩家更好的游戏体验。您的支持能让我投入更多时间在创作上，开发出更多有趣的模组！</p>
-            <p>点击上方链接关注我，您的每一次点击都是对我最大的鼓励！</p>
-        </div>
+        <!-- 其他链接区域 -->
+        <section class="links-section">
+            <h2 class="section-title">支持与关注</h2>
+            
+            <div class="links-grid">
+                <div class="link-card">
+                    <div class="link-icon" style="color: #ff6b9d;">
+                        <i class="fas fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="link-title">爱发电支持</h3>
+                    <p class="link-desc">您的支持能让我投入更多时间在模组开发上，每一份赞助都是我深夜编码的动力！</p>
+                    <a href="https://afdian.com/a/bukkit_plugin" target="_blank" class="btn-link">
+                        <i class="fas fa-heart"></i> 支持我的创作
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon" style="color: #00a1d6;">
+                        <i class="fab fa-bilibili"></i>
+                    </div>
+                    <h3 class="link-title">B站频道</h3>
+                    <p class="link-desc">关注我的B站频道，观看模组演示、开发日志和教程，第一时间获取更新信息！</p>
+                    <a href="https://space.bilibili.com/3546861273090398?spm_id_from=333.33.0.0" target="_blank" class="btn-link">
+                        <i class="fas fa-play-circle"></i> 前往B站
+                    </a>
+                </div>
+                
+                <div class="link-card">
+                    <div class="link-icon" style="color: #00cec9;">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="link-title">模组开发教程</h3>
+                    <p class="link-desc">想学习模组开发吗？这里提供了从入门到进阶的完整教程，帮助你踏上模组开发之路。</p>
+                    <a href="https://blog.csdn.net/qq_24992377/category_12929001.html" target="_blank" class="btn-link">
+                        <i class="fas fa-book-open"></i> 学习开发
+                    </a>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 开发者故事 -->
+        <section class="dev-story">
+            <h2>我的开发者故事</h2>
+            <p>
+                作为一名独立开发者，我每天都在与代码为伴。<span class="coffee"><i class="fas fa-coffee"></i> 咖啡</span>是我最好的朋友，深夜的键盘声是我的背景音乐。<span class="highlight">《增强仿生》</span>和<span class="highlight">《化学工业》</span>这两个模组是我数百小时心血的结晶。
+            </p>
+            <p>
+                从构思技能系统到设计化学反应，从调试怪物AI到优化性能，每个细节都经过反复测试。我知道一个好的模组能带给玩家无数小时的快乐，这就是我坚持下去的动力。
+            </p>
+            <p>
+                您的支持对我意义重大！无论是下载我的模组、在爱发电上赞助，还是关注我的B站频道，都能让我投入更多时间创造更好的内容。感谢每一位支持者！
+            </p>
+            <p style="font-weight: 600; color: var(--accent); margin-top: 1.5rem;">
+                点击上方链接下载模组或支持我，您的每次点击都是对我最大的鼓励！
+            </p>
+        </section>
         
         <footer>
-            <p>© 2023 个人开发者支持站 | 感谢您的访问与支持！</p>
-            <p>联系方式：通过上述平台私信联系我</p>
+            <p>© 2023 模组开发者 | 感谢每一位玩家的支持！</p>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem;">点击屏幕任意位置触发五彩粒子效果</p>
         </footer>
     </div>
     
     <div class="click-hint">
-        <i class="fas fa-mouse-pointer"></i> 点击屏幕任意位置查看粒子效果
+        <i class="fas fa-mouse-pointer"></i> 点击屏幕触发粒子效果
     </div>
     
+    <!-- 引入particles.js库 -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // 初始化粒子背景
+        // 粒子颜色数组
+        const particleColors = [
+            '#6c5ce7', '#a29bfe', '#00cec9', '#ff7675', '#fdcb6e', 
+            '#00b894', '#e84393', '#0984e3', '#fd79a8', '#ffeaa7'
+        ];
+        
+        // 初始化背景粒子
         particlesJS("particles-js", {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#4db8ff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
+                number: { 
+                    value: 60, 
+                    density: { 
+                        enable: true, 
+                        value_area: 1000 
+                    } 
+                },
+                color: { 
+                    value: particleColors 
+                },
+                shape: { 
+                    type: "circle" 
+                },
+                opacity: { 
+                    value: 0.5, 
+                    random: true 
+                },
+                size: { 
+                    value: 3, 
+                    random: true 
+                },
                 line_linked: {
                     enable: true,
                     distance: 150,
-                    color: "#4db8ff",
+                    color: "#6c5ce7",
                     opacity: 0.2,
                     width: 1
                 },
@@ -330,124 +671,210 @@
             interactivity: {
                 detect_on: "canvas",
                 events: {
-                    onhover: { enable: true, mode: "repulse" },
-                    onclick: { enable: true, mode: "push" },
+                    onhover: { 
+                        enable: true, 
+                        mode: "repulse" 
+                    },
                     resize: true
                 }
             }
         });
         
-        // 点击屏幕产生更多粒子的效果
-        document.body.addEventListener('click', function(e) {
-            particlesJS("particles-js", {
-                particles: {
-                    number: { value: 150, density: { enable: true, value_area: 800 } },
-                    color: { value: ["#4db8ff", "#8ae2ff", "#ffcc4d"] },
-                    shape: { type: "circle" },
-                    opacity: { value: 0.7, random: true },
-                    size: { value: 4, random: true },
-                    line_linked: {
-                        enable: true,
-                        distance: 150,
-                        color: "#4db8ff",
-                        opacity: 0.3,
-                        width: 1
-                    },
-                    move: {
-                        enable: true,
-                        speed: 4,
-                        direction: "none",
-                        random: true,
-                        straight: false,
-                        out_mode: "out",
-                        bounce: false
-                    }
-                },
-                interactivity: {
-                    detect_on: "canvas",
-                    events: {
-                        onhover: { enable: true, mode: "repulse" },
-                        onclick: { enable: true, mode: "push" },
-                        resize: true
-                    }
-                }
-            });
+        // 粒子计数器
+        let particleCount = 0;
+        const countElement = document.getElementById('count');
+        
+        // 点击屏幕产生粒子效果
+        document.addEventListener('click', function(e) {
+            // 获取点击位置
+            const x = e.clientX;
+            const y = e.clientY;
             
-            // 短暂改变背景色
-            document.body.style.background = "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
+            // 产生大量粒子
+            createClickParticles(x, y, 50);
+            
+            // 添加粒子计数显示类
+            document.body.classList.add('show-count');
+            
+            // 更新计数器
+            particleCount += 50;
+            countElement.textContent = particleCount;
+            
+            // 5秒后隐藏计数器
             setTimeout(() => {
-                document.body.style.background = "linear-gradient(135deg, #0f2027, #203a43, #2c5364)";
-            }, 300);
-            
-            // 创建点击位置的粒子爆发效果
-            createClickEffect(e.clientX, e.clientY);
+                document.body.classList.remove('show-count');
+            }, 5000);
         });
         
-        function createClickEffect(x, y) {
-            const colors = ["#4db8ff", "#8ae2ff", "#ffcc4d"];
-            for (let i = 0; i < 15; i++) {
+        // 创建点击粒子效果
+        function createClickParticles(x, y, count) {
+            for (let i = 0; i < count; i++) {
+                // 创建粒子元素
                 const particle = document.createElement('div');
-                particle.style.position = 'fixed';
-                particle.style.left = x + 'px';
-                particle.style.top = y + 'px';
-                particle.style.width = '8px';
-                particle.style.height = '8px';
-                particle.style.borderRadius = '50%';
-                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.pointerEvents = 'none';
-                particle.style.zIndex = '9999';
+                particle.className = 'click-particle';
+                
+                // 随机大小
+                const size = Math.random() * 15 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机颜色
+                const color = particleColors[Math.floor(Math.random() * particleColors.length)];
+                particle.style.backgroundColor = color;
+                
+                // 随机起始位置（在点击点周围）
+                const offsetX = (Math.random() - 0.5) * 30;
+                const offsetY = (Math.random() - 0.5) * 30;
+                particle.style.left = `${x + offsetX}px`;
+                particle.style.top = `${y + offsetY}px`;
+                
+                // 添加到页面
+                document.body.appendChild(particle);
+                
+                // 随机运动方向
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 2;
+                
+                // 随机生命周期
+                const life = Math.random() * 1000 + 500;
+                
+                // 动画变量
+                let startX = x + offsetX;
+                let startY = y + offsetY;
+                let vx = Math.cos(angle) * speed;
+                let vy = Math.sin(angle) * speed;
+                let opacity = 1;
+                let age = 0;
+                
+                // 动画函数
+                function animate() {
+                    age += 16; // 大约60fps
+                    
+                    // 更新位置
+                    startX += vx;
+                    startY += vy;
+                    
+                    // 添加重力效果
+                    vy += 0.1;
+                    
+                    // 更新透明度
+                    opacity = 1 - (age / life);
+                    
+                    // 应用变化
+                    particle.style.left = `${startX}px`;
+                    particle.style.top = `${startY}px`;
+                    particle.style.opacity = opacity;
+                    particle.style.transform = `translate(-50%, -50%) scale(${0.5 + opacity * 0.5})`;
+                    
+                    // 如果粒子还活着，继续动画
+                    if (age < life) {
+                        requestAnimationFrame(animate);
+                    } else {
+                        // 移除粒子
+                        document.body.removeChild(particle);
+                    }
+                }
+                
+                // 开始动画
+                requestAnimationFrame(animate);
+            }
+            
+            // 添加视觉反馈 - 短暂的背景闪光
+            const originalBackground = document.body.style.background;
+            document.body.style.background = 'linear-gradient(135deg, #0c0e1d, #2a1c3e, #2a2d42)';
+            
+            setTimeout(() => {
+                document.body.style.background = originalBackground;
+            }, 200);
+        }
+        
+        // 鼠标移动时产生跟随粒子
+        let mouseX = 0;
+        let mouseY = 0;
+        let lastParticleTime = 0;
+        
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // 限制粒子产生频率
+            const now = Date.now();
+            if (now - lastParticleTime > 50) {
+                createMouseParticles(mouseX, mouseY, 2);
+                lastParticleTime = now;
+            }
+        });
+        
+        // 创建鼠标跟随粒子
+        function createMouseParticles(x, y, count) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'click-particle';
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = particleColors[Math.floor(Math.random() * 3)];
+                
+                const offsetX = (Math.random() - 0.5) * 10;
+                const offsetY = (Math.random() - 0.5) * 10;
+                particle.style.left = `${x + offsetX}px`;
+                particle.style.top = `${y + offsetY}px`;
                 
                 document.body.appendChild(particle);
                 
-                const angle = Math.random() * Math.PI * 2;
-                const speed = 2 + Math.random() * 3;
-                const vx = Math.cos(angle) * speed;
-                const vy = Math.sin(angle) * speed;
+                let startX = x + offsetX;
+                let startY = y + offsetY;
+                let opacity = 0.7;
+                let age = 0;
+                const life = 500;
                 
-                let opacity = 1;
-                const animate = () => {
-                    x += vx;
-                    y += vy;
-                    opacity -= 0.03;
+                function animate() {
+                    age += 16;
+                    opacity = 0.7 * (1 - (age / life));
                     
-                    particle.style.left = x + 'px';
-                    particle.style.top = y + 'px';
                     particle.style.opacity = opacity;
                     
-                    if (opacity > 0) {
+                    if (age < life) {
                         requestAnimationFrame(animate);
                     } else {
                         document.body.removeChild(particle);
                     }
-                };
+                }
                 
-                animate();
+                requestAnimationFrame(animate);
             }
         }
         
-        // 卡片悬停效果增强
-        document.querySelectorAll('.link-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px) scale(1.02)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0) scale(1)';
-            });
-        });
-        
-        // 按钮点击效果
-        document.querySelectorAll('.btn').forEach(btn => {
+        // 按钮点击效果增强
+        document.querySelectorAll('.btn-download, .btn-link').forEach(btn => {
             btn.addEventListener('click', function(e) {
-                // 创建点击效果
-                createClickEffect(e.clientX, e.clientY);
+                // 创建按钮点击粒子效果
+                const rect = this.getBoundingClientRect();
+                const x = rect.left + rect.width / 2;
+                const y = rect.top + rect.height / 2;
+                
+                createClickParticles(x, y, 20);
                 
                 // 添加点击反馈
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
                     this.style.transform = '';
                 }, 150);
+                
+                // 更新粒子计数器
+                particleCount += 20;
+                countElement.textContent = particleCount;
             });
+        });
+        
+        // 自动产生一些初始粒子
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                createClickParticles(window.innerWidth / 2, window.innerHeight / 2, 30);
+                particleCount += 30;
+                countElement.textContent = particleCount;
+            }, 1000);
         });
     </script>
 </body>
